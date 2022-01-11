@@ -1,0 +1,385 @@
+클래스 상속 
+super() : 자식클래스에서 부모클래스를 참조할때 사용
+           부모 클래스의 대리자 역할
+
+class Child(Parent) :
+    def __init__(self, ):
+        super().__init__(self)
+
+파이썬은 다중 상속 지원
+
+내장 모듈  - random, datetime.datetime, datetime.date, datetime.timedelta
+           date.today() , time모듈  time.time(),  strptime(), strftime(), time.sleep(초)
+           
+
+클래스(객체) 관계
+1. 상속 (is a)  : child객체 is a 부모클래스
+2. 객체가 다른 객체의 멤버(인스턴스변수)가 될 수 있습니다. : has a
+   class TravelBiz :
+        def __init__(self):
+             self.travel  = Travel(...)
+
+3. 객체가 다른 객체를 사용 : USE
+   class Test :
+       def func(travel) :
+            travel.flight
+            travel.메서드()
+
+
+scores = {"현빈" : [ 80,90,100] , 
+             "원빈" : [70,80,90],
+             "우빈" : [75,88,95],
+             "혜빈" : [80,70,85]}
+
+def getTotalAvg(scores) :
+     #파라미터로 전달받은 dict로부터 
+     학생당 총점과 평균을 연산하고
+     새로운 dict에 키는 이름, value는 tuple객체에 총점과 평균을 저장해서 리턴
+
+scores = {"현빈" : [ 80,90,100] , 
+             "원빈" : [70,80,90],
+             "우빈" : [75,88,95],
+             "혜빈" : [80,70,85]}
+
+def getTotalAvg(scores) :   #함수 정의
+    result = {}
+    for k, v in scores.items():
+        data  = (sum(v), sum(v)/len(v))
+        result[k] = data
+    return result
+
+sungjuk = getTotalAvg(scores)   #함수호출
+print(sungjuk)
+
+모듈 : 프로그램을 만드는 작은 단위의 프로그램
+        물리적 하나의 파일로 존재(저장) .py
+        변수, 함수, 클래스들을 그룹핑한 것
+        파일이름이 모듈명이 됨 (소문자 권장)
+
+import 모듈명
+
+모듈명.함수
+모듈명.변수
+....
+
+from 모듈명 import  함수
+함수
+....
+
+내장모듈은 python설치 디렉토리 Lib폴더
+
+패키지 : 물리적으로는 디렉토리로 존재하고 디렉토리명이 패키지명이 됨
+           관련된 모듈들의 묶음
+
+minegame(패키지) --- __init__.py
+                        ---sound(패키지)--- __init__.py
+                                                 load.py  (모듈)
+                                                 play.py
+                                                 pause.py
+                        ---image(패키지)---__init__.py
+                                                 open.py
+                                                 change.py
+                        ---chatting(패키지)---__init__.py
+                                                 .....
+                        ---store(패키지)
+
+
+site-packages는 파이썬의 기본 라이브러리 패키지 외에 추가적으로 다운로드 받아서 설치되는 패키지들이 저장되는 곳
+여러 소프트웨어가 사용할 공통 모듈을 넣어두면 경로 구애 받지 않고 사용 가능
+
+
+#fah_converter.py로 저장
+def convert_c_to_f(celcius_value):
+    return celcius_value*9.0/5+32
+
+
+#모듈을 사용
+import fah_converter
+
+celcius = float(input('Enter a celcius value:'))
+fahrenheit = fah_converter.convert_c_to_f(celcius)
+print( celcius , "=>", fahrenheit )
+
+######################################################
+import fah_converter as ctoh
+celcius = float(input('Enter a celcius value:'))
+fahrenheit = ctoh.convert_c_to_f(celcius)
+print( celcius , "=>", fahrenheit )
+
+
+######################################################
+from  fah_converter import convert_c_to_f as c_to_f
+
+celcius = float(input('Enter a celcius value:'))
+fahrenheit =c_to_f(celcius)
+print( celcius , "=>", fahrenheit )
+
+
+roboadvisor 패키지 - crawling 기능(주식관련 데이터를 웹에서 가져오는 기능)
+                           database 기능 (가져온 데이터를 전처리 후 DB에 저장 기능)
+                           analysis 기능( 데이터 분석 후 정보 생성)
+
+
+[패키지와 모듈 구성 구조]
+roboadvisor(D)--- __init__.py(F)
+                       crawling(D)---__init__.py(F)
+                                        parser.py  ---  parser_test()
+                                        scrap.py
+                       database(D)---__init__.py(F)
+                                         connection.py
+                                         query.py
+                       analysis(D)---__init__.py(F)
+                                         regression.py
+                                         statics.py
+
+
+def parser_test():
+    print("crawling.parser_test() called")
+
+
+#최상위 패키지를 포함해서 하위 패키지의 모듈을 실행
+from roboadvisor.analysis import statics
+statics.statics_test()
+
+
+
+#최상위 패키지 폴더 아래 __pycache__ 폴더가 생성됨
+패키지 아래 모듈들을 컴파일하고  컴파일 결과를 저장합니다.
+모듈 수정후에는 수정된 결과가 컴파일 결과에 저장되지 않으므로
+프로그램 종료 또는 파이썬 셸을 종료한 후에 수정해야 수정된 결과가 컴파일 결과에 반영되어 저장됨  
+파이썬은 인터프리터 언어지만, 내부적으로는 컴파일을 하고 있음
+
+
+__init__.py파일에는 메타 데이터를 구성합니다.
+#roboadvisor패키지의 __init__.py의 내용
+import analysis
+import database
+import crawling
+
+__all__ = ['analysis', 'database', 'crawling']
+
+
+###############도서정보 조회 workshop###########################
+#클래스 정의
+class Book :     
+    def __init__(self, title, price) :
+        #멤버변수(인스턴스변수) 선언 및 초기화
+         pass
+   
+    def __str__(self) :
+        #Book클래스로부터 생성된 객체의 상태를 표현하는 문자열 리턴
+        pass
+
+
+
+#클래스 정의
+class Magazine(Book):
+    def __init__(self, title, price, category, description) :
+        #멤버변수(인스턴스변수) 선언 및 초기화
+        pass
+
+    def __str__(self) :
+        #Magazine클래스로부터 생성된 객체의 상태를 표현하는 문자열 리턴
+        pass
+
+
+#클래스 정의
+class Novel(Book):
+    def __init__(self, title, price, author) :
+        #멤버변수(인스턴스변수) 선언 및 초기화
+        pass
+
+    def __str__(self) :
+        #Novel클래스로부터 생성된 객체의 상태를 표현하는 문자열 리턴
+        pass
+        pass
+
+
+
+#클래스 정의
+class BookBiz:
+    def __init__(self, magazines, novels) :
+        #멤버변수(인스턴스변수) 선언 및 초기화
+        pass
+
+    def printAllBooks(self) :
+        #모든 도서 정보 출력하는 메서드
+        pass
+
+    def printAllMagazines(self) :
+       #도서중 잡지만 출력하는 메서드
+        pass
+
+    def printAllNovels(self) :
+        #도서중 소설만 출력하는 메서드
+        pass
+
+    def printMagazineOneYearSubscription(self) :
+        #잡지의 1년 구독료를 출력하는 메서드
+        pass
+
+    def searchNovelByAuthor(self, author) :
+        #소설중 작가로 검색된 소설객체를 출력하는 메서드
+        pass
+
+    def searchNovelByPrice(self, minPrice, maxPrice) :
+        #소설중 최대가격과 최소가격사이의 소설 검색 후 결과를 출력하는 메서드
+        pass
+
+    def calculateOneYearSubscriptionPrice(self, price) :
+        #잡지의 가격을 파라미터로 받아서 1년 구독료 계산해서 리턴하는 메서드
+        pass
+
+    @staticmethod
+    def getUserInput() :
+        #사용자로부터 키보드 입력을 받아서 리턴하는 메서드
+        pass
+   
+    @staticmethod
+    def printHead() :
+        #도서정보 출력할때 heading만 출력하는 메서드
+        pass
+
+
+    @staticmethod
+    def printTail() :
+        #모든 도서정보 출력후 밑줄 출력하는 메서드
+        pass
+
+    @staticmethod
+    def printMenu() :
+        #메뉴 출력하는 메서드
+        pass
+
+
+
+#객체 생성하고 메서드 호출하는 실행코드 (Sample Run 참고)
+isinstance(객체, 클래스타입)
+
+###################################################################
+#클래스 정의
+class Book :     
+    def __init__(self, title, price) :
+        #멤버변수(인스턴스변수) 선언 및 초기화
+        self.title = title
+        self.price = price
+   
+    def __str__(self) :
+        #Book클래스로부터 생성된 객체의 상태를 표현하는 문자열 리턴
+        pass
+
+
+#클래스 정의
+class Magazine(Book):
+    def __init__(self, title, price, category, description) :
+        #멤버변수(인스턴스변수) 선언 및 초기화
+        super().__init__(title, price)
+        self.category = category
+        self.description = description
+         
+
+    def __str__(self) :
+        #Magazine클래스로부터 생성된 객체의 상태를 표현하는 문자열 리턴
+         return "[제목]{0:<15}   [분류]{1:<15}    [가격] {2:>5}   [비고]{3:<15}".format(self.title, self.category , self.price, self.description)
+
+
+#클래스 정의
+class Novel(Book):
+    def __init__(self, title, price, author) :
+        #멤버변수(인스턴스변수) 선언 및 초기화
+        super().__init__(title, price)
+        self.author = author
+         
+
+    def __str__(self) :
+        #Novel클래스로부터 생성된 객체의 상태를 표현하는 문자열 리턴
+        return "[제목]{0:<15}   [저자]{1:<15}    [가격] {2:>5} ".format(self.title, self.author , self.price )
+        
+
+
+
+#클래스 정의
+class BookBiz:
+    def __init__(self, magazines, novels) :
+        #멤버변수(인스턴스변수) 선언 및 초기화
+        magazines.extend(novels)
+        self.books = magazines
+
+    def printAllBooks(self) :
+        #모든 도서 정보 출력하는 메서드        
+        for idx, bk in enumerate(self.books):             
+            print("{0}.{1}".format(idx+1, bk))
+
+    def printAllMagazines(self) :
+       #도서중 잡지만 출력하는 메서드         
+        for idx,bk in enumerate(self.books):             
+            if isinstance(bk  , Magazine) :
+                 print("{0}.{1}".format(idx+1, bk))
+             
+         
+
+    def printAllNovels(self) :
+        #도서중 소설만 출력하는 메서드
+        idx = 1
+        for bk in self.books:             
+            if isinstance(bk  , Novel) :
+                print("{0}.{1}".format(idx, bk))
+                idx+=1
+
+    def printMagazineOneYearSubscription(self) :
+        #잡지의 1년 구독료를 출력하는 메서드
+        idx = 1
+        for bk in self.books:            
+            if isinstance(bk  , Magazine) :                 
+                print( "{0}.{1}:{2}원".format(idx, bk.title,  self.calculateOneYearSubscriptionPrice(bk.price))) 
+                idx+=1
+
+    def searchNovelByAuthor(self, author) :
+        #소설중 작가로 검색된 소설객체를 출력하는 메서드
+        idx = 1
+        for bk in self.books:
+            if isinstance(bk  , Novel)  and bk.author == author:
+                print("{0}.{1}".format(idx, bk))
+                idx += 1
+            
+
+    def searchNovelByPrice(self, minPrice, maxPrice) :
+        #소설중 최대가격과 최소가격사이의 소설 검색 후 결과를 출력하는 메서드
+        idx = 1
+        for bk in self.books:
+            if isinstance(bk  , Novel) and bk.price >=minPrice and bk.price <=maxPrice:
+                print("{0}.{1}".format(idx, bk))
+                idx += 1
+
+    def calculateOneYearSubscriptionPrice(self, price) :
+        #잡지의 가격을 파라미터로 받아서 1년 구독료 계산해서 리턴하는 메서드
+        return price * 12
+
+    @staticmethod
+    def getUserInput() :
+        #사용자로부터 키보드 입력을 받아서 리턴하는 메서드
+        return input('')
+   
+    @staticmethod
+    def printHead() :
+        #도서정보 출력할때 heading만 출력하는 메서드
+        print("-------------------------------------도서 정보 -------------------------------------------")
+
+
+    @staticmethod
+    def printTail() :
+        #모든 도서정보 출력후 밑줄 출력하는 메서드
+        print("-----------------------------------------------------------------------------------------")
+
+    @staticmethod
+    def printMenu() :
+        #메뉴 출력하는 메서드
+        print("=== << 도서 정보 프로그램 >> ===")
+        print("1. 전체 도서 정보 조회 ")
+        print("2. 전체 잡지 조회 ")
+        print("3. 전체 소설 조회")
+        print("4. 잡지 연간 구독료 조회 ")
+        print("5. 소설 저자명 검색 ")
+        print("6. 소설 가격 검색 (최소값 ~ 최대값)")
+        print("9. 시스템 종료 ")        
+        print("===============================")

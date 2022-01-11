@@ -1,0 +1,276 @@
+Linux나 unix os 환경 cmd를 터미널 부르고 스크립트 코드 작성 및 실행 환경을 제공하는 프로그램을 셸 프로그램
+
+string1 = "I never dreamed about success, I worked for it"
+print(string1)
+print(len(string1))  #내장함수
+print(string1.lower())  #문자열객체.메서드()
+print(string1.upper())
+print(string1.title())
+print(string1.capitalize())
+print(string1.count("I"))  #I문자열의 개수 반환
+print(string1.find("I"))    ##I문자열의 index반환
+print(string1.rfind("I"))   ##오른쪽으로부터 I문자열의 찾고 위치offset index반환
+print(string1.startswith("it"))
+print(string1.endswith("it"))
+
+
+string1 ="   dreamed about success   "
+print(string1)
+print(len(string1))  #내장함수 
+print(len(string1.strip()))
+print(len(string1.rstrip()))
+print(len(string1.lstrip()))
+
+strings = string1.split()  #공백을 기준으로 tokenizing, 집합자료형 list으로 리턴
+print(type(strings))
+print(strings)            #[값, 값, 값,   ]
+
+print(string1.isupper())
+print(string1.islower())
+string1 ="2021"
+print(string1.isdigit())
+string1 ="2021/12/23"
+print(string1.isdigit())
+
+
+string.py 모듈
+str는 내장 타입
+
+traveler ="""강나루 건너서
+밀밭 길을
+
+
+구름에 달 가듯이
+가는 나그네
+길은 외줄기
+남도 삼백리
+
+
+술 익는 마을마다
+타는 저녁놀
+구름에 달 가듯이
+가는 나그네"""
+
+poet = traveler.splitlines()
+print(type(poet))
+print(poet)
+for line in poet:
+    print(line.center(30))
+
+
+
+Yesterday
+All my troubles seemed to far away
+Now it looks as though they're here to stay
+Oh, I believe in yesterday
+Suddenly
+I'm not half the man I used to be
+There's a shadow hanging over me
+Oh, yesterday came suddenly
+Why she had to go
+I don't know, she wouldn't say
+I said something wrong
+Now I long for yesterday
+Yesterday
+Love was such an easy game to play
+Now I need a place to hide away
+Oh, I believe in yesterday
+Why she had to go
+I don't know, she wouldn't say
+I said something wrong
+Now I long for yesterday
+Yesterday
+Love was such an easy game to play
+Now I need a place to hide away
+Oh, I believe in yesterday
+
+
+f = open('yesterday.txt', 'r')
+print(type(f))
+yesterday_lyric = f.readlines()  #파일 내용을 문장단위로 리스트의 요소로 저장 리턴
+print(type(yesterday_lyric))
+print(yesterday_lyric)
+f.close() #파일은 open한 후에 반드시 닫아주어야 합니다.
+
+
+f = open('yesterday.txt', 'r')
+music = f.read()  
+print(type(music))  #str 문자열
+print(music)
+f.close() #파일은 open한 후에 반드시 닫아주어야 합니다.
+
+#len()내장함수로서 함수는 독립적 기능을 수행하며
+#메서드는 객체.메서드()로 사용해야 합니다.  객체가 소유하고 있는 기능이므로
+
+lower_music = music.lower()  #가사를 모두 소문자로 변환
+nums = lower_music.count("yesterday")  #가사내에 yesterday 단어 개수를 세고 리턴
+print("Number of a Word 'Yesterday'", nums)
+
+
+집합자료형 - list, tuple, set , dict,....
+list객체(변수) = [값, 값, 값 ,...]
+list는 하나이상의 데이터를 저장하는 구조이면서 저장된 데이터의 순서가 보장
+list에 중복 데이터 저장 가능
+list에 저장된 데이터 offset으로 index 사용
+
+color = "green"
+print(type(color))
+print(len(color))  #문자열을 구성하는 문자개수를 반환
+
+colors = ["red", "green", "blue"] 
+print(type(colors))
+print(len(colors))      #리스트에 저장된 데이터 개수를 반환
+
+colors2 = ["red", 0xffffff, 0.5]  #리스트에는 저장되는 데이터유형이 동일하지 않아도 됨
+print(type(colors2))
+
+#리스트에는 저장되는 데이터는 indexing으로 하나 하나 데이터를 처리, 접근 가능
+print(colors[0])
+print(colors[-1])
+
+#리스트에는 저장되는 데이터는 slicing으로 부분 추출 가능
+print(colors[:])
+print(colors[1:])
+
+cities =['서울', '부산', '인천', '대구', '대전', '광주', '울산', '수원']
+print(cities[ : :2])
+print(cities[ : :-1])
+print(cities[ -30:30])  # [:]
+
+colors2 = ["white", "black", "pink"] 
+result =colors+colors2  #결합 
+print(type(result))
+print( result)
+print(id( result))
+
+result =colors*3  #반복 
+print(type(result))
+print( result)
+print(id( result))
+
+#파이썬의 리스트는 내부 데이터 요소를 변경할 수 있습니다.
+print(colors)
+colors.append("orange")
+print(colors)
+colors.insert(0, "purple")
+print(colors)
+
+colors.extend(["cyan", "gray", "yellow"])  #colors객체를 확장
+print(colors)
+
+colors.remove('red')  #remove()는 데이터를 전달하면 리스트내에서 데이터를 찾아 삭제
+print(colors)
+del colors[0]  #del명령은 삭제할 데이터의 index값을 전달하면 index에 저장된 데이터 삭제
+print(colors)
+
+print(colors.index('gray'))  #index()는 데이터를 전달하면 리스트내에서 데이터를 찾아 offset 반환
+
+colors.reverse()  #리스트 객체내의 데이터의 순서를 역순으로 재배치 저장됨
+print(colors)
+
+print(result)
+print(result.count("green"))
+
+result.clear()  #데이터 요소 모두 삭제, 빈리스트로 만듬
+print(result)
+
+
+print(colors) 
+print(colors.sort())  #None은 반환값이 없음, sort()는 리스트 내부 요소를 오름차순으로 정렬
+print(colors)
+
+nums = [5,1,8,3,7,2]
+print(sorted(nums))  #내장함수, 리스트 내부 요소를 오름차순으로 정렬한 새로운 리스트 객체 반환
+print(nums)
+print(sorted(nums, reverse=True)) 
+print(nums)
+
+#colors2 = ["white", "black", "pink"] 
+print(colors2)
+a, b, c = colors2   # unpacking
+print(a, b, c)
+
+# unpacking 주의사항 - 집합객체의 데이터 개수만큼 변수를 선언하지 않으면 오류발생
+x, y = colors2
+x, y , w, z = colors2
+
+colors5 = [a, b, c] #packing은 하나의 변수에 여러 개의 데이터를 할당
+print(type(colors5))
+print(colors5)
+
+#리스트내에 리스트를 저장해서 2차원 리스트를 만들어 사용 가능
+kor_score=[49,79,50,95,80]
+math_score =[60,70,80,90,70]
+eng_score=[80,70,60,50,90]
+midterm_score=[kor_score, math_score, eng_score]
+print(midterm_score)
+print(type(midterm_score))
+
+total = [0,0,0,0,0]  #총점을 저장할 리스트 초기화
+
+for  subject in midterm_score :  
+    idx = 0
+    for  jumsu in subject :
+        total[idx] += jumsu
+        idx+=1
+
+print("총점 : ", total)
+print("평균 : ", end=" ")
+for jumsu in total:
+    print(jumsu/3, end=" ")
+
+
+ExcerciseCode1 > 
+1~100사이의 정수 난수 10개를 생성해서 리스트에 저장하고
+저장된 리스트내에 데이터중에서 가장 큰 값을 찾는 로직을 만들고 찾은 max값 출력하시오
+import random
+nums =[]
+for i in range(0, 10) :
+    nums.append(random.randint(1, 100))
+print(nums)    
+max = nums[0]
+for i in range(1, 10) :
+    if (max<nums[i]) :
+        max = nums[i]
+print(max) 
+
+ExcerciseCode2>
+lotto 번호 생성해서 리스트에 저장하고 출력하시오
+(lotto 번호는 1~45의 숫자중 , 6개)
+import random
+lotto=[]
+while len(lotto) < 6:
+    num = random.randint(1,45) #1<=x<=45
+    if num not in lotto:
+        lotto.append(num)
+
+print("pick list : ",end=""); print(lotto)
+lotto.sort(reverse=True)
+print("sorted list(ASC) : ", end=""); print(lotto)
+lotto.sort()
+print("sorted list(DESC) : ", end=""); print(lotto)
+
+ExcerciseCode3 > 
+1~100사이의 정수 난수 10개를 생성해서 리스트에 저장하고
+저장된 리스트내에 데이터중에서 5의 배수의 개수와 합계 평균을 출력하시오
+import random
+nums =[]
+for i in range(0, 10) :
+    nums.append(random.randint(1, 100))
+print(nums)    
+
+cnt =0
+total = 0
+for i in range(0, 10) :
+    if (nums[i]%5==0) :
+        cnt+=1
+        total += nums[i]
+print("5의 배수 개수 :", cnt) 
+print("5의 배수 합계 :", total) 
+print("5의 배수 평균 :", total/cnt) 
+ExcerciseCode4 > 
+주사위를 10번 던져서 각 숫자가 몇 번씩 나왔는지 알아보려고 한다.
+리스트를 활용하여 리스트에 각 주사위를 던져서 나온 숫자의 개수를 저장하고 출력하시오
+
+
+교재 55페이지까지 수업함

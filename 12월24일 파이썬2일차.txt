@@ -1,0 +1,428 @@
+2차원리스트는 1차원리스트를 요소(item)으로 저장
+2차원리스트는 2차원 구조(행과 열 구성)의 데이터를 처리할때 유용
+
+for 변수1(1차원list)  in 2차원 list 객체 :  #2차원list에 저장된 1차원list의 개수만큼반복
+    for 변수2(데이터)  in  변수1(1차원list) :
+         변수2(데이터)를 처리하는 코드
+
+ExcerciseCode4 > 
+주사위를 10번 던져서 각 숫자가 몇 번씩 나왔는지 알아보려고 한다.
+리스트를 활용하여 리스트에 각 주사위를 던져서 나온 숫자의 개수를 저장하고 출력하시오
+
+import random
+
+dice_count=[0, 0, 0, 0, 0, 0]
+for i in range(0, 10) : 
+    dice = random.randint(1, 6)
+    dice_count[dice-1] +=1
+    print(dice, end=" ")
+print( )
+
+for cnt in range(0, 6) : #0,1,2,3,4,5
+    print("dice number ", cnt+1 ,"의 개수는 ",  dice_count[cnt])
+
+
+lst = [10,20,30,40]
+cp_lst = lst.copy()   #깊은 복사(deep copy)는 새로운 객체를 만들고 내부 원소들도 메모리에 data로 저장됨 
+print(id(lst))  #메모리에서 객체를 식별값 (논리적 주소 개념)
+print(id(cp_lst))  #메모리에서 객체를 식별값 (논리적 주소 개념)
+
+print(lst == cp_lst)
+print(lst is cp_lst)
+
+lst[1] = 100
+print(lst)
+print(cp_lst)
+
+
+scp_lst = lst   #얕은 복사(shallow copy)는 원본 객체의 주소가 할당되어 동일한 객체를 참조함
+print(id(lst)) 
+print(id(scp_lst)) 
+
+print(lst == scp_lst)
+print(lst is scp_lst)
+
+lst[0] = 33
+print(lst)
+print(scp_lst)
+
+#[], list()로 빈 list 객체 생성
+
+#tuple은 리스트와 유사, 
+리스트는 데이터 요소, 삭제, 추가, 확장이 가능하지만, tuple 읽기 전용
+count(), index() 메서드 제공
+tuple은 리스트보다 더 적은 공간을 사용
+위경도 좌표나 RGB 색상처럼 작은 규모의  변경되지 않는 데이터에 대한 읽기 전용 자료 구조를 구성하기에 적합
+tp = 1,
+print(type(tp))  
+print(tp)
+
+tp2 = ()
+print(type(tp2))
+print(tp2)
+
+tp3 = tuple()
+print(type(tp3))
+print(tp3)
+
+lst =["red", "green", "blue"]
+tp5 = tuple(lst)
+print(type(tp5))
+print(tp5)
+
+#tuple 자료형은 인덱싱, 슬라이싱, 더하기, 곱하기 연산 지원
+print(tp5*5)                       #복제
+print(tp5+("white", "black"))   #결합
+cities =('서울', '부산', '인천', '대구', '대전', '광주', '울산', '수원')
+print(type(cities))
+print(cities[1])  		#인덱싱
+print(cities[ : :2])  		#슬라이싱
+print(cities[ : :-1])
+print(cities[ -30:30]) 
+
+#tuple의 데이터 원소 개수 반환 - 내장함수 len
+print(len(cities))
+
+x, y, z = tp5  #unpacking
+
+#집합 자료형 set : 값을 저장한 순서와 관련없이 저장됨, data의 중복 저장 허용하지 않음
+s1 = set(['a', 'b', 'a', 'b'])
+print(type(s1))
+print(s1)
+print(len(s1))  #{'a','b'}
+s2 = {'a', 'b', 'a', 'b'}
+print(type(s2))
+print(s2)
+
+집합 자료형 set은 집합데이터객체들간에 합집합, 교집합, 차집합, 부분집합 연산 지원
+add() : set객체에 데이터 하나 추가
+remove(), discard() : set객체에 데이터 제거 (하나)
+update(객체) :  인수로 전달한 객체의 데이터를 set의 데이터로 추가
+clear() : set객체의 모든 데이터를 메모리에서 삭제
+
+s1.add('c')
+print(s1)
+s1.remove('a')
+print(s1)
+s1.update(['d', 'e', 'f', 'g'])
+print(s1)
+print(type(s1))
+print(s2)
+s2.clear()
+print(s2)
+
+s2 = {1,2, 3, 4, 5}
+s3 = {8,7, 6, 5, 4,3}
+print(s2.union(s3))
+print(s2.intersection(s3))
+print(s3.difference(s2))
+
+print(s2 | s3)
+print(s2 & s3)
+print(s3 - s2)
+
+#difference_update : 차집합을 처리하고 기존 set 인스턴스 내부 원소를 갱신
+print(s2)
+print(s3)
+s3.difference_update(s2)
+print(s2)
+print(s3)
+
+#intersection_update : 교집합을 처리하고 인스턴스 내부를 갱신
+s3 = {8, 7, 6, 5, 4, 3}
+print(s2)
+print(s3)
+s3.intersection_update(s2)
+print(s2)
+print(s3)
+#symmetric_difference_update : 대칭 차집합을 처리하고 인스턴스 내부를 갱신
+print(s3^s2)  #대칭차집합
+s3 = {8, 7, 6, 5, 4, 3, 2, 1}
+print(s3<=s2)
+print(s3.issubset(s2))
+print(s3>=s2)
+print(s3.issuperset(s2))
+print(s3 < s2)  #proper subset진부분집합이냐?
+print(s3 > s2)
+
+s3.remove(1)
+print(s3)
+s3.discard(2)
+print(s3)
+
+s3.remove(9)  # 삭제할 원소가 없을 경우 Exception 발생
+s3.discard(9)  #삭제할 원소가 없을 경우 Exception 대신 None 리턴
+
+#원소가 없는 empty set객체를 생성할때 {}로 생성할 수 없으며, 반드시 set()으로 생성해야 함
+
+s5 = set()
+print(type(s5))
+print(len(s5))
+s6 = {}
+print(type(s6))
+print(len(s6))
+
+#딕셔너리 dict 
+data를 저장할때 unique한 key를 함께 저장
+{key:값, key:값,....}, dict()
+
+students = {2021001: 'park', 2021002:'lee', 2021003:'song'}
+print(students)
+print(type(students))
+print(len(students))
+students[2021005] = 'kim'   #데이터 추가
+print(students)
+print(len(students))
+
+print(students[2021002])  #key를 사용하여 데이터를 참조
+
+fruits = dict(apple=500,orange=700, kiwi=1000 )
+print(fruits)
+print(type(fruits)) 
+
+print(fruits.keys())
+ks= fruits.keys()
+print(type(ks))
+print(fruits.values())
+vs = fruits.values()
+print(type(vs))
+for k, v in fruits.items() :  #  tuple(key, value) 객체로 반환 
+    print(k, ":", v)
+
+CodeExcercise1>
+같은 숫자가 나올 때까지 주사위 6개를 동시에 무한 반복해서 던진다.
+같은 숫자가 나올 때까지 몇 번 던졌는지, 1부터 6까지 연속된 숫자는 몇 번 나왔는지 출력하는  프로그램 코드를 작성하시오
+[Sample Run]  
+6개 주사위가 모두 동일한 숫자가 나옴 --> 2 2 2 2 2 2
+6개가 동일한 숫자가 나올 때까지 주사위를 던진 횟수 --> 10652
+6개가  동일한 숫자가 나올 때까지 1 ~6의 연속번호가 나온 횟수 --> 172
+
+while True :
+    주사위를 던진 횟수 1증가
+    for i in range(0, 6):
+        #주사위 6개 숫자 생성해서 list또는 set에 저장
+    #생성된 주사위값을 비교해서
+      모두 일치하면 while반복문 탈출
+      주사위값이 1, 2, 3, 4,5, 6이면 연속번호가 나온 횟수 1증가 
+
+import random;
+count1 = 0  #주사위를 던진 횟수 저장 변수
+serial  = 0   #연속번호가 나온 횟수 저장 변수
+while True :
+    dices = set() #빈 set객체
+    count1 += 1
+    for i in range(0, 6):
+        dices.add(random.randint(1, 6))
+    if len(dices) == 6 :
+        serial +=1
+    elif len(dices) == 1 :
+        break
+dice = tuple(dices)
+print ("6개 주사위가 모두 동일한 숫자가 나옴-->" ,  end=" ")
+for i in range(0, 6):
+    print(dice[0], end=" ")
+print()
+print ("6개가 동일한 숫자가 나올 때까지 주사위를 던진 횟수 -->" ,count1)    
+print ("6개가  동일한 숫자가 나올 때까지 1 ~6의 연속번호가 나온 횟수 -->" ,serial)
+
+CodeExcercise2>
+1과 1000사이에 있는 홀수의 합계 중에서 최초로 합계가 1000이 넘어가는 숫자를 구하는  프로그램 코드를 작성하시오 
+total = 0
+for num in range(1, 1000) :
+    if num%2 ==1 :
+        total +=num
+    if total >1000 :
+        print(num)
+        break
+
+CodeExcercise3>
+입력된 문자열에서 숫자를 삭제하는 프로그램을 작성하시오
+[Sample Run]  
+문자열 -->  IT python 1234 Flask
+숫자제거 -->  IT python  Flask
+
+[방법1]
+text = input("문자열 -->")
+text_list = text.split()
+for idx in range(len(text_list)):       
+    if text_list[idx].isdigit() :
+        text_list[idx] =" "
+print ("숫자제거 -->" , end=" ") 
+for idx in range(len(text_list)):
+    print(text_list[idx], end=" ")
+
+[방법2]
+text = "IT python 1234 Flask"
+for char in text :
+    if char.isdigit() :
+        text = text.replace(char, "")
+print(text)
+
+CodeExcercise4>
+set을 사용하여 로또 번호 추첨처럼 1~45의 숫자 중에서 중복 없이 6개를 뽑는 프로그램을 구현하시오
+[Sample Run] 
+** 로또 추첨을 시작합니다. **
+추첨된 로또 번호 --> 2, 6, 8, 27, 32, 41
+
+import random
+lotto=set()
+while len(lotto) < 6:
+    num = random.randint(1,45)  
+    lotto.add(num)
+
+lotto_lst = list(lotto)
+print("lotto  : ",end=""); print(lotto)
+lotto_lst.sort()
+print("sorted lotto(ASC) : ", end=""); print(lotto_lst)
+lotto_lst.sort(reverse=True)
+print("sorted lotto(DESC) : ", end=""); print(lotto_lst)
+
+
+CodeExcercise5>
+4행 3열의 2차원리스트 선언하고 아래의 값으로 초기화 한 후 차례대로 출력한 후 리스트의 모든 값을 더한 결과를 출력하는 프로그램을 작성하시오.
+[[3, 5, 9], [2, 11, 5], [8, 30, 10], [22, 5, 1]]
+[출력 예]
+3 5 9
+2 11 5
+8 30 10
+22 5 1
+111
+
+lst2d = [[3, 5, 9], [2, 11, 5], [8, 30, 10], [22, 5, 1]]
+total = 0
+for lst in lst2d:
+    for data in lst:
+        print (data, end=" ")
+        total += data
+    print()
+print (total)
+
+
+CodeExcercise7>
+2행 3열 리스트을 두 개 선언하여 각각의 값을 입력 받은 후 두 리스트의 같은 위치끼리 곱하여 새로운 리스트에 저장한 후 출력하는 프로그램을 작성하시오.
+[입력 예]
+first list
+3 6 9
+8 5 2
+second list
+9 8 7
+6 5 4
+[출력 예]
+27 48 63
+48 25 8
+
+방법1]
+first = [[3, 6, 9],[8, 5, 2]]
+second = [[9, 8, 7],[6, 5, 4]]
+new_list = [[0, 0, 0],[0, 0, 0]]
+for i in range(len(first)):   #len(first)는 2
+    for j in range(len(first[0])):   #len(first[0])는 3
+        new_list[i][j] = first[i][j]* second[i][j]
+
+for i in range(len(first)):
+    for j in range(len(first[0])):
+        print(new_list[i][j], end=" ")
+    print()
+
+###########################
+방법2]
+first = [[3, 6, 9],[8, 5, 2]]
+second = [[9, 8, 7],[6, 5, 4]]
+new_list = [ ]
+for i in range(2):
+    lst=[]
+    for j in range(3):
+        lst.append(first[i][j]* second[i][j])
+    new_list.append(lst)
+
+for i in range(2):
+    for j in range(3):
+        print(new_list[i][j], end=" ")
+    print()
+
+CodeExcercise8>
+4행 2열의 리스트을 입력받아 가로평균과 세로평균 그리고 전체평균을 출력하는 프로그램을 작성하시오. (소수점 이하는 버림 한다.)
+[입력 예]
+16 27
+39 100
+19 88
+61 20
+[출력 예]
+21 69 53 40
+33 58
+46
+
+lst2d =[[16, 27], [39, 100], [19, 88],[61, 20]] 
+h_total =[0, 0]
+for row in range(len(lst2d)) :
+    w_total =0
+    #len(lst2d[0])는 2차원배열내에 1차원배열의 데이터 개수 (열 개수)
+    for col in range(len(lst2d[0])) :  
+        w_total += lst2d[row][col]
+        h_total[col] += lst2d[row][col]
+    print(w_total//len(lst2d[0]), end=" ")     
+print()
+total = 0
+for data in h_total:
+    total += data
+    print(data//len(lst2d), end= " ")  #len(lst2d)는 2차원배열의 행개수
+print()   
+print(total//(len(h_total)*len(lst2d)) )
+
+
+
+CodeExcercise6>
+세개의 정수를 입력받아서 
+세 정수의 곱을 계산하고 
+계산한 결과에서 0~9의 숫자가 몇개씩 포함되어 있는지 출력하시오
+입력 예]
+정수1 입력 : 150
+정수2 입력 : 266
+정수3 입력 : 427
+출력 예]
+150 X 266 X 427 = 17037300
+3 1 0 2 0 0 0 2 0 0
+
+num1 =int( input("정수1 입력 :"))
+num2 =int( input("정수2 입력 :"))
+num3 =int( input("정수3 입력 :"))
+total = num1*num2*num3
+print(num1, "X", num2, "X", num3, "=" , total)
+num_list = [0,0,0,0,0,0,0,0,0,0]
+for ch in str(total):
+     num_list[int(ch)] +=1
+print(num_list)
+
+
+CodeExcercise9>
+"OOXXOXXOOO"와 같은 OX퀴즈의 결과가 있다. O는 문제를 맞은 것이고, X는 문제를 틀린 것이다. 문제를 맞은 경우 그 문제의 점수는 그 문제까지 연속된 O의 개수가 된다. 예를 들어, 10번 문제의 점수는 3이 된다.
+"OOXXOXXOOO"의 점수는 1+2+0+0+1+0+0+1+2+3 = 10점이다.
+OX퀴즈의 결과가 주어졌을 때, 점수를 구하는 프로그램을 작성하시오.
+   
+예시]
+OOXXOXXOOO  =>  10점
+OOXXOOXXOO  = >  9점
+OXOXOXOXOXOXOX => 7점
+OOOOOOOOOO  => 55점
+OOOOXOOOOXOOOOX   => 30점
+
+OX_str =  input("OX 입력 :")
+total = 0
+jumsu = 0
+for ch in OX_str :    
+    if ch=="O" :
+        jumsu +=1
+        total +=jumsu
+    elif ch=='X' :
+        jumsu = 0
+print(total, "점")
+
+
+
+
+CodeExcercise10>
+오름차순으로 정렬된 1차원의 점들이 주어졌을 때, 그 중 거리가 가장 짧은 거리를 출력하는 프로그램을 작성하십시오
+입력 데이터 예시 :  [1, 5, 7, 8, 12, 16, 20] 
+출력 예시 : 최단 거리는 1
+입력 데이터 예시 :  [20,90,130,450,923,1020,2943,3920,9431,11309] 
+출력 예시 : 최단 거리는 40

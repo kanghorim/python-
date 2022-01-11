@@ -1,0 +1,557 @@
+
+range(end)
+range(start, end)
+range(start, end, step)
+
+for num in range(0, step=2) :   #TypeError
+    print(num)
+
+for num in range(5) :    
+    print(num)
+else :  #for와 함께 사용된 else는 중단없이 for문이 모두 수행된 후에 수행됨
+    print("end")
+
+
+for num in range(5) :   
+    if(num==2) : 
+        break 
+    print(num)
+else :    
+    print("end")
+
+
+for num in range(5) :   
+    if(num==2) :
+        continue
+    print(num)
+else :
+    print("end")
+
+
+#dict에서 slicing
+d={'a':65, 'b':66, 'c':67, 'd':68, 'e':69, 'f':70}
+print(d['a':'c'])  #?
+
+#리스트의 데이터를 순차적으로 꺼내서 하나의 문자열로 만듬
+colors=['red', blue', 'green', 'yellow']
+result=''.join(colors)
+print(result)
+
+#list comprehension 은 기존 리스트객체를 이용하여 간단하게 새로운 리스트를 만드는 방법
+result=[]       
+for i in range(10):
+    result.append(i)
+print(result)   #empty list와 for문 사용해서 리스트내에 데이터 추가
+
+result2 = [ i for i in range(10)]   #list comprehension으로 list 생성
+print(result2)
+
+#필터링을 적용해서 리스트 생성하는 list comprehension
+result=[]       
+for i in range(10):
+    if i%2==0:
+        result.append(i)
+print(result)  
+
+result2 = [ i for i in range(10) if i%2==0]   #list comprehension으로 list 생성
+print(result2)
+
+# if ~ else를 사용하여 list 생성하는 list comprehension
+result3 = [ i if i%2==0 else 10  for i in range(10) ]    
+print(result3)
+
+# 중첩 반복문을 사용하여 list 생성하는 list comprehension
+word_1 ="Hello"
+word_2 ="World"
+result2 = [i+j for i in word_1 for j in word_2]
+print(result2)
+
+
+
+
+
+
+
+
+# 중첩 반복문과 필터링을 사용하여 list 생성하는 list comprehension
+case_1 = ["A", "B", "C]
+case_2 =["D", "E", "A"]
+result = [i+j for i in case_1 for j  in case_2 if not(i==j)]
+print(result)
+
+#이차원 리스트를 생성하는  list comprehension
+words ="Where there is a will there is a way ".split()
+print(words)
+stuff =[[w.upper(), w.lower(), len(w) ] for w in words]
+for i in stuff:
+    print(i)
+
+case_1 = ["A", "B", "C]
+case_2 =["D", "E", "A"]
+result = [i+j for i in case_1 for j  in case_2 ]
+print(result)
+
+#이차원 리스트를 생성하는  list comprehension
+case_1 = ["A", "B", "C]
+case_2 =["D", "E", "A"]
+result = [ [i+j for i in case_1] for j  in case_2 ]
+print(result)
+
+# list comprehension은 문법적 간단함 + 성능 좋음
+
+
+
+#enumerate()는 리스트에서 데이터를 추출할때 인덱스도 함께 반환
+words = "Courage is very important when it comes to anything".split()
+for i , v in enumerate(words):
+    print(i, v)
+
+result3 = {i:j for i, j in enumerate(words) }
+print(result3)
+
+result  = {i:j for i, j in enumerate("Courage is very important when it comes to anything".split()) }
+print(result)
+
+a, b, c = zip((1, 2, 3), (10, 20, 30), (100, 200, 300))
+print(a, b, c)
+
+result2 =[sum(x) for x in  zip((1, 2, 3), (10, 20, 30), (100, 200, 300)) ]
+print(result2)
+
+alist = ['a1', 'a2', 'a3']
+blist = ['b1', 'b2', 'b3']
+for i , (a, b) in enumerate(zip(alist, blist)):
+    print(i, a, b)
+
+result = [[i, a, b] for i , (a, b) in enumerate(zip(alist, blist))]
+print(result)
+ 
+f = open('myFile.txt', 'w')
+f.write('This is my first file')
+f.close()
+
+
+f = open('myFile.txt', 'x')  #동일한 이름의 파일이 이미 존재하므로 오류발생시킴
+f.write("Courage is very important when it comes to anything")
+f.close()
+
+f = open('myFile.txt', 'w')   #파일 내용을 replace함
+f.write("Courage is very important when it comes to anything")
+f.close()
+
+f = open('myFile.txt', 'a')     #파일 내용을 append함
+f.write("Where there is a will there is a way")
+f.close()
+
+f = open('myFile.txt', 'r') 
+print(type(f))
+contents = f.readlines()  #파일의 내용을 라인단위로 데이터요소로 저장한 리스트로 반환
+print(type(contents))
+print(contents)
+f.close()
+
+f = open('myFile.txt', 'r') 
+contents = f.read()  ##파일의 내용을 하나의 문자열로 반환
+print(type(contents))
+print(contents)
+f.close()
+
+f = open('myFile.txt', 'r') 
+line = f.readline()   ##파일의 내용을 문장(line)단위로 하나씩 읽어 반환함
+while line:
+    print(line)
+    line = f.readline()
+f.close()
+
+with open('myFile.txt', 'r') as f :
+    #read()/write()
+#with블럭을 빠져나오면 파이썬 인터프리터가 파일을 close()하므로...
+
+#csv, excel, xml, json형식을 파일을 읽기 위해서 라이브러리를 활용
+
+
+#기능/메뉴 단위로 함수, 클래스, 모듈, 패키지 형태로 만들어서 조립합니다.
+#함수 function -  '어떤 일을 수행하는 코드들의 묶음'에 이름을 정의해놓은 것
+                       재사용
+                       필요할 때마다 함수이름으로 호출해서 실행시킵니다.
+                       기능을 논리적인 단위로 분할 한 것
+def  함수이름(매개변수, 매개변수, ....) :
+    수행문장
+    수행문장
+    .....
+    return 결과  #생략되면 return None이 자동으로 수행됨
+             
+변수 = 함수이름(파라미터, 파라미터, ..)  #함수호출, 결과값을 변수에 저장
+
+ex1>calc함수 , 두개의 수와 한개의 연산자를 파라미터로 받아서 수행결과를 리턴
+def calc(num1, num2, operator) :
+     #result = 0
+     if operator == "+" :
+         result = num1 + num2
+     elif operator == "*" :
+         result = num1 * num2
+     elif operator == "//" :
+         result = num1 // num2
+     elif operator == "%" :
+         result = num1 % num2	
+     return result
+
+#함수 호출할때 값을 전달하면 순서대로 매개변수에 매핑됨, positional parameter전달방식
+print(calc(3, 4, "+"))  
+#키워드 인수, named parameter 전달 방식, 값을 전달할때 매개변수명도 함께 전달하므로 함수에 선언된 매개변수의 순서가 달라도 됨
+print(calc(operator="*", num2=5, num1=7))   
+print(calc(30, 4, "//"))
+print(calc(30, 4, "%"))
+
+
+ex2> 함수로 만들고 호출해서 결과 출력
+두 개의 음이 아닌 정수를 입력받아 큰 수의 제곱에서 작은 수의 제곱을 뺀 결과값을 반환하는 함수를 정의하고 ...
+def calc2(num1, num2):
+    result = 0
+    if num1>= num2 :
+        result = num1**2 - num2**2
+    else :
+        result = num2**2 - num1**2
+    return result
+
+print(함수이름(8, 10))   #36
+
+#default arguments를 가지는 함수
+def something(name, team="KT"):  #기본값을 가지는 매개변수 
+    print("{0}선수는 {1} 소속입니다.".format(name, team))
+
+something("엄상백")   #기본값이 선언된 파라미터는 생략 가능
+something("양의지", "NC")
+something(team="키움", name="이정후")
+something(team="KT", name="강백호")
+
+#함수의 매개변수가 정해지지 않은 경우, 가변 인수를 사용하여 함수를 정의합니다
+#가변인수를 가지는 함수를 호출할때 가변인수는 0 or more로 전달할 수 있습니다.
+def asterisk_test(a, b, *args):
+    return a+b+sum(args)
+
+print(asterisk_test(1, 2, 3, 4, 5))
+print(asterisk_test(1, 2 ))  #
+#집합객체는 가변인수로 전달할때 unpacking해서 전달해야 합니다.
+print(asterisk_test(1, 2, [1, 2, 3, 4, 5] ))  
+
+def asterisk_test(a, b, *args):
+    print(type(args))  #가변인수는 함수내부에서 read only만 가능한 tuple객체임.
+    print(len(args))
+
+asterisk_test(1, 2, 3, 4, 5)
+asterisk_test(1, 2 )
+
+#키워드 가변 인수 함수
+def kwargs_test(**kwargs):
+    print(kwargs)   #출력형식 dict
+    print(type(kwargs))   
+    print(len(kwargs))
+
+
+kwargs_test(first=3, second=4, third=5)
+kwargs_test(apple=300, orange=200, banana=100, melon=500, peach=700)
+
+
+def kwargs_test(**kwargs):
+    for k, v in kwargs.items():
+        print(k, " price is " v)
+
+kwargs_test(first=3, second=4, third=5)
+kwargs_test(apple=300, orange=200, banana=100, melon=500, peach=700)
+
+#가변인수는 함수 선언시에 첫번째로 선언 불가(TypeError )
+def function_test(*a, b, c ):  
+    pass    
+
+function_test(1,2,3,4,5)  
+
+     
+#가변인수는 함수 선언시에 중간매개변수로 선언 불가 TypeError
+def function_test( b, *a, c ):  
+    pass  
+
+function_test(1,2,3,4,5) 
+
+
+def function_test( b,  c , *a):  
+    pass  
+
+function_test(1,2,3,4,5)
+
+#키워드 가변인수는 함수 선언시에 첫번째로 선언 불가(SyntaxError )
+def function_test(**kwargs,  b,  c , *a):  
+    pass  
+
+
+#키워드 가변인수는 함수 선언시에 중간에 혹은 가변인수 앞에 선언 불가 (SyntaxError )
+def function_test( b, c , **kwargs,   *a):  
+    pass  
+
+#키워드 가변인수는 함수 선언시에 반드시 마지막에 선언해야 합니다.
+def function_test( b, c ,  *a, **kwargs):  
+    pass  
+function_test(1,2,3,4,five=5, six=6, seven=7)
+
+
+#파이썬은 함수적 프로그래밍 언어입니다
+#함수의 파라미터로 함수를 전달할 수 있습니다.
+#파라미터로 전달되는 함수는 이름없는 1회성으로 수행되는 람다 함수로 전달합니다.
+람다 함수는 이름 없이 , 정의한 위치에서 실행되고 , 메모리에서 제거되는 1회성 함수 , 익명 함수
+
+def f(x, y): 
+    return x+y
+
+print(f(1, 3))
+
+f = lambda x, y :  x+y   #익명함수를 변수에 저장해서 사용
+print(f(1, 3))
+
+print((lambda x : x+1)(5))
+
+k=[1, 3, 5, 7]
+print(all(k))
+
+k=[1, 3, 5, 0]
+print(all(k))
+
+k = [0, "", False, 5]
+print(any(k))
+
+k = [0, "", False, ()]
+print(any(k))
+
+print(ascii('I am 대한Korean') )  #\ub300\ud55c
+
+message ="Python is fun"
+byte_message = bytes(message, 'utf-8')
+print(byte_message)
+
+message ="파이썬은 쉬운 언어입니다."
+byte_message = bytes(message, 'utf-8')
+print(byte_message)
+
+#chr()  
+print(chr(97))
+
+#divmod()
+print(divmod(8, 3))
+print(divmod(8.0, 3))
+
+#eval()
+number = 9
+print('number * number')
+square_number = eval('number * number')
+print(square_number )
+
+a=5   #전역변수
+def func() :
+    print(a)  # 전역변수 참조
+
+func()  #a변수값 출력 ?
+
+
+a=5   #전역변수
+def func() :
+    a = 0   #로컬변수, 지역변수는 선언된 블럭 내부에서만 참조가 가능
+    print(a)  #  
+
+func()   #a변수값 출력 ?
+
+
+def func() :
+    local = 0    
+    print(local)    
+
+func()    
+print(local)  #local변수는 함수 내부에서만 사용 가능 함수외부에서는 참조 불가
+
+
+a = 5
+def func():
+    a *=5  #a = a+5 는 연산 전에 a변수를 선언하고 초기값이 할당되어야 합니다.
+    print(a)
+
+func()  #함수 호출
+
+
+
+a = 5
+def func():
+    global  a 
+    a *=5   
+    print(a)
+
+func()  #함수 호출
+
+
+#7장 함수와 9장 문자열 텍스트 처리 
+
+
+
+#함수 연습문제 1
+정수 N을 입력받고 다시 N개의 정수를 입력받아 내림차순으로 정렬하여 출력하는 함수를 만드시오.
+입력 예] 입력받을 정수 개수 : 5
+            정수 입력 :  12 35 1 48 9
+출력 예] 78 35 12 9 1 
+
+1단계 : input함수로 정수를 입력받고
+2단계 : 입력받은 정수로 함수로 호출하면 인수로 전달
+3단계 : 호출된 함수에서는 입력받은 정수만큼 반복수행해서 정수를 입력받고
+          리스트에 저장하고  , sort() 또는  sorted() 함수를 이용해서 내림차순 정렬하고 출력
+
+def func(nums) :   #함수 정의
+    lst = [] 
+    for i in range(nums) :
+        lst.append(int(input(" 정수 입력 :")))
+    
+    sorted_lst = sorted(lst, reverse=True)
+    print(sorted_lst)
+    
+cnt = int(input("입력받을 정수 개수 :"))
+func(cnt)        #함수 호출/실행
+
+          
+           
+#함수 연습문제 2
+yesterday.txt파일을 읽어서  문장 개수와  단어 개수를 출력하는 함수를 정의하시오
+함수를 실행시켜서 결과를 출력하시오
+1단계 : open() 
+2단계 : readlines()이용해서 생성된 list로부터 요소 개수를 반환하면 문장 개수임
+3단계 :   list로부터 요소를 꺼내서 (문자열) split()사용....단어 개수 누적해서 출력
+
+def sentences_words_count() :
+    f = open('yesterday.txt', 'r')
+    sentences = f.readlines()
+    print("문장 개수 : ", len(sentences))
+    word_count = 0
+    for sentence in sentences :
+        word_count += len(sentence.split())
+    print("단어  개수 : ", word_count)
+    
+sentences_words_count() 
+
+     
+
+#함수 연습문제 3
+5개의 정수를 입력받아 각 정수의 절대값의 합을 출력하는 함수를 정의하고
+함수를 실행시켜서 결과를 출력하시오
+입력 예] 35 -20 10 0 55
+출력 예]  120
+
+
+def abs_sum():
+    total = 0 
+    for i in range(5) :
+        total += abs(int(input(" 정수 입력 :")))
+    return total
+
+print(abs_sum())
+
+
+#함수 연습문제 4
+yesterday.txt파일을 읽어서 단어의 출현 횟수를 기준으로 정렬된 결과를 출력하는 함수를 정의하시오
+
+1단계 : open() 
+2단계 : read()이용해서 반환된 문자열을  split() 메서드를 사용하여 tokenizing하면 list로 반환
+3단계 :  list를 set()를 사용하여 set객체로 변환해서 중복 단어 제거
+4단계 : for문을 사용하여 set객체로부터 단어를 꺼내서 count()한 결과를 
+          dict객체에 단어는 키로 count()의 결과는 value로 추가 
+5단계 : dict객체에 저장된 value값을 기준으로 내림차순 정렬해서 출력
+
+word_list = []
+yesterday_str = ""
+with open('yesterday.txt', 'r') as f :
+    yesterday_str=f.read() 
+    yesterday_str = yesterday_str.lower()
+    word_list=yesterday_str.split()
+
+print(len(word_list))  #총 단어 개수
+word_set = set(word_list)
+print(len(word_set))  #중복을 제거한 단어 개수
+
+word_dict = {}
+
+for word in word_set :
+    word_dict[word] =  yesterday_str.count(word)
+
+print(word_dict)  #key는 단어, value는 출현 횟수
+
+#dict의 key를 기준으로 오름차순 정렬
+sorted_word_dict = sorted(word_dict.items()) 
+#word_dict.items()는 tuple pair로 이루어진 list 리턴
+print(sorted_word_dict)
+
+#dict의 key를 기준으로 내림차순 정렬
+desc_word_dict = sorted(word_dict.items(), key=lambda item : item[0], reverse=True ) 
+print(desc_word_dict)
+
+#dict의 value를 기준으로 오름차순 정렬
+sorted_word_dict = sorted(word_dict.items(), key=lambda item : item[1]) 
+print(sorted_word_dict)
+
+
+#dict의 value를 기준으로 내림차순 정렬
+desc_word_dict =sorted(word_dict.items(), key=lambda item : item[1], reverse=True) 
+print(desc_word_dict)
+
+
+
+
+def word_count_descsort(filename):
+    word_list = []
+    yesterday_str = ""
+    with open(filename, 'r') as f :
+        yesterday_str=f.read() 
+        yesterday_str = yesterday_str.lower()
+        word_list=yesterday_str.split()
+    word_set = set(word_list)
+    word_dict = {}
+    for word in word_set :
+        word_dict[word] =  yesterday_str.count(word)
+    desc_word_dict =sorted(word_dict.items(), key=lambda item : item[1], reverse=True) 
+    print(desc_word_dict)
+
+
+
+
+
+
+#함수 연습문제5
+주민번호를 입력하면 유효한지 유효하지 않은지 bool값으로 반환하는 함수를 정의하고 함수를 실행시켜서 결과를 출력하시오
+/*
+ * 사용자로부터 주민번호 입력 받음 : 000000-0000000 (문자열로 읽어들임)
+		-을 제외시키고 한문자 한문자를 정수로 변환해서 int[] 에 저장 (배열의 크기는 13)
+		주민번호 체크 :
+		주민번호 앞에서부터 12자리의 각 자리의 수에 가중치 
+		{ 2, 3, 4, 5, 6, 7, 8, 9, 2, 3, 4, 5 }를 곱합니다.
+		곱한수를 모두 더하여 총합을 구합니다.		 
+		총합을 11로 나눈 나머지를 구합니다.
+		그 나머지를 11에서 뺀 결과가 CHECK DIGIT 입니다.
+		뺀 결과가 2자리수인 경우에는 2자리수를 10으로 나눈 나머지가 CHECK DIGIT가 됩니다.
+		CHECK DIGIT의 값이 입력 숫자 스트링의 13번째 숫자와 같으면 "CORRECT", 다르면 "INCORRECT"를 출력합니다.
+		HINT> (11-나머지)%10 또는 (11-total%11)%10
+ */
+
+def check_jumin() :
+    jumin_str = input("주민번호 입력(000000-0000000) :")   
+    jumin_nums =[]
+    for s in jumin_str :
+        if s == "-" :
+            continue
+        else :
+            jumin_nums.append(int(s))
+
+    digit = 2
+    total = 0
+    for idx in range(len(jumin_nums)-1) :
+        if  digit ==10 :
+ 	digit = 2
+        jumin_nums[idx]*digit
+        digit +=1
+
+    check_digit = (11-total%11)%10
+    if (check_digit == jumin_nums[-1]) :
+        print("CORRECT")
+    else :
+        print("INCORRECT")

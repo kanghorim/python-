@@ -1,0 +1,551 @@
+class A :
+    def __init__(self):
+        print("A.__init__() called")
+        self.message1 = "A.message1"
+    
+    def method(self):
+        print("A.method() called")
+
+
+class B :
+    def __init__(self):
+        print("B.__init__() called")
+        self.message2 = "B.message2"
+    
+    def method(self):
+        print("B.method() called")
+
+
+class C :
+    def __init__(self):
+        print("C.__init__() called")
+        self.message3 = "C.message3"
+    
+    def method(self):
+        print("C.method() called")
+
+
+class D (B, C, A) :   #다중 상속
+    def __init__(self):
+        super().__init__(self)    #부모의 초기화 메서드를 호출     
+        print("D.__init__() called")  
+
+
+obj = D()  #객체 생성
+print(obj.messge1)
+#print(obj.messge2)
+#print(obj.messge3)
+obj.method()    #누구의 메서드 호출?
+
+
+############################################
+class A :
+    def __init__(self):
+        print("A.__init__() called")
+        self.message1 = "A.message1"
+    
+    def method(self):
+        print("A.method() called")
+
+
+class B :
+    def __init__(self):
+        print("B.__init__() called")
+        self.message2 = "B.message2"
+    
+    def method(self):
+        print("B.method() called")
+
+
+class C :
+    def __init__(self):
+        print("C.__init__() called")
+        self.message3 = "C.message3"
+    
+    def method(self):
+        print("C.method() called")
+
+
+class D (C, B , A) :   #다중 상속
+    def __init__(self):
+        super().__init__()    #부모의 초기화 메서드를 호출 
+        A.__init__(self)
+        B.__init__(self)
+        print("D.__init__() called")  
+
+
+
+#실행 확인 코드
+obj = D()  #객체 생성
+print(obj.message1)
+print(obj.message2)
+print(obj.message3)
+obj.method()    #누구의 메서드 호출?
+
+#####################################################
+class A :
+    def __init__(self):
+        print("A.__init__() called")
+        self.message1 = "A.message1"
+    
+    def method(self):
+        print("A.method() called")
+
+
+class B(A) :
+    def __init__(self):
+        print("B.__init__() called")
+        super().__init__()
+        self.message2 = "B.message2"
+    
+    def method(self):
+        print("B.method() called")
+
+
+class C(B) :
+    def __init__(self):
+        print("C.__init__() called")
+        super().__init__()
+        self.message3 = "C.message3"
+    
+    def method(self):
+        print("C.method() called")
+
+
+class D (C) :   #다중 상속
+    def __init__(self):
+        super().__init__()    #부모의 초기화 메서드를 호출         
+        print("D.__init__() called")  
+
+
+
+#실행 확인 코드
+obj = D()  #객체 생성
+print(obj.message1)
+print(obj.message2)
+print(obj.message3)
+obj.method()    #누구의 메서드 호출?
+
+##########################################################
+class A :
+    def __init__(self):
+        print("A.__init__() called")
+        self.message1 = "A.message1"
+    
+    def method1(self):
+        print("A.method1() called")
+
+
+class B(A) :
+    def __init__(self):
+        print("B.__init__() called")
+        super().__init__()
+        self.message2 = "B.message2"
+    
+    def method2(self):
+        print("B.method2() called")
+
+
+class C(B) :
+    def __init__(self):
+        print("C.__init__() called")
+        super().__init__()
+        self.message3 = "C.message3"
+    
+    def method3(self):
+        print("C.method3() called")
+
+
+class D (C) :   #다중 상속
+    def __init__(self):
+        super().__init__()    #부모의 초기화 메서드를 호출         
+        print("D.__init__() called")  
+
+obj = D()  #객체 생성 
+obj.method1() 
+obj.method2()
+obj.method3()
+
+
+#####################################
+class A :
+    def __init__(self):
+        print("A.__init__() called")
+        self.message1 = "A.message1"
+    
+    def method1(self):
+        print("A.method() called")
+
+
+class B :
+    def __init__(self):
+        print("B.__init__() called")
+        self.message2 = "B.message2"
+    
+    def method2(self):
+        print("B.method() called")
+
+
+class C :
+    def __init__(self):
+        print("C.__init__() called")
+        self.message3 = "C.message3"
+    
+    def method3(self):
+        print("C.method() called")
+
+
+class D (C, B , A) :   #다중 상속
+    def __init__(self):
+        super().__init__()    #부모의 초기화 메서드를 호출          
+        print("D.__init__() called")  
+
+
+###########################################
+#####################################################
+예외(exception) - 프로그램 개발하면서 예상하지 못한 상황이 발생
+Error  - 물리적, 치명적 오류, 처리 불가
+Exception - 논리적, 가벼운, 프로그램적으로 수정 가능, 처리 가능해서 오류로 인한 프로그램 중단없이 끝까지 수행시킬 수 있음
+
+예상 가능한 예외 - 발생 여부를 개발자가 사전에 인지할 수 있는 예외
+예상 불가능한 예외 
+
+
+def evenCheck(num):
+    if num%2 == 0 :
+        print(num, "Even")
+    else :
+        print(num, "Odd")
+
+
+n = int(input("짝/홀 수 판별할 정수 입력:"))
+evenCheck(n)    #실수,  입력값이 없을 때, 문자 일때는? VaueError
+
+try :
+    예외 발생 가능 코드
+except 예외타입 :
+    발생된 예외를 처리하는 코드
+
+
+for  i in range(10):
+    print(10/i)          #ZeroDivisionError 발생
+
+
+for  i in range(10):
+    try :
+        print(10/i)
+    except ZeroDivisionError :
+        print(10/-(i+1))
+
+#아래 코드는 예외가 발생했을때와 발생하지 않았을때 비교
+print("before execute code")
+for  i in range(2):                  #for  i in range(1, 3): 
+    try :
+        print(10/i)
+        print("other execute code")
+    except ZeroDivisionError :
+        print("예외처리 코드")
+
+print("another execute code")
+
+
+for  i in range(2):                   
+    try :
+        print(10/i)
+        print("other execute code")
+    except ZeroDivisionError  as e :
+        #e.멤버변수 사용 
+        #e.메서드() 호출
+
+
+
+try :
+    예외 발생 가능 코드
+except 예외타입 :
+    발생된 예외를 처리하는 코드
+else :
+    예외가 발생하지 않을 때 실행되는 코드
+
+
+for  i in range(2):                   
+    try :
+        print(10/i)        
+    except ZeroDivisionError :
+        print("예외처리 코드")
+    else : 
+        print("예외가 발생하지 않았을때 실행 코드")
+
+
+for  i in range(1, 3): 
+    try :
+        print(10/i)        
+    except ZeroDivisionError :
+        print("예외처리 코드")
+    else : 
+        print("예외가 발생하지 않았을때 실행 코드")
+
+
+
+try :
+    예외 발생 가능 코드
+except 예외타입 :
+    발생된 예외를 처리하는 코드
+finally :
+    예외 발생 여부와 상관없이 실행되는 코드
+
+
+for  i in range(2):                   
+    try :
+        print(10/i)        
+    except ZeroDivisionError :
+        print("예외처리 코드")
+    finally : 
+        print("무조건 실행 코드- ex : resource 정리 코드")
+
+
+for  i in range(1, 3): 
+    try :
+        print(10/i)        
+    except ZeroDivisionError :
+        print("예외처리 코드")
+    else : 
+        print("무조건 실행 코드- ex : resource 정리 코드")
+
+
+raise 예외타입  =>예외를 발생시키는 코드
+
+while True:
+    value = input("변환할 정수 입력 : ")
+    for digit in value:
+        if digit not in "0123456789" :
+            raise ValueError("숫자값을 입력하지 않았습니다.")
+    print("정수값으로 변환된 수 : ", int(value))
+
+
+#사용자 정의 예외 클래스
+class OutOfRangeTallError (Exception) :  
+    def __init__(self):
+        self.tall = 160.5
+
+    def __str__(self) :
+        return "중학생 평균키 범위는 130 이상  180 이하입니다."
+
+
+def checkTall(middleTall):
+    #범위는 130 이상  180 이하가 아니면 예외(OutOfRangeTall) 발생시킵니다.
+    if middleTall < 130 or middleTall >180 :
+        raise OutOfRangeTallError
+
+
+def getAvgTall(talls) :
+    """
+    파라미터로 전달받은 리스트에서 데이터를 하나씩 유효범위인지 체크해서
+    예외가 발생하면 예외클래스의 멤버변수인 작년도 키 값으로 보정을 하는 
+      예외 처리를 한 후에 올해의 중학생 평균 키를 반환합니다. """
+    for idx,  t  in enumerate(talls) :
+        try :
+            checkTall(t)
+        except OutOfRangeTallError as e:
+            talls[idx] = e.tall
+    
+    return sum(talls)/len(talls)
+    
+
+#실행 코드 
+talls = [150,155.5,148,117,161,163.5,185,164,170,169,159,152]
+print("2021년도 중학생 평균 키 :", getAvgTall(talls) )  #함수 호출
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##########################################################################################
+
+#클래스 정의
+class Customer :
+    def __init__(self, name, age, phone) :
+        #멤버변수(인스턴스변수) 선언 및 초기화
+        self.name = name
+        self.age = age
+        self.phone = phone
+   
+    def __str__(self) :
+        #Customer클래스로부터 생성된 객체의 상태를 표현하는 문자열 리턴
+        return "[이름]{0:<4}  [나이]{1:>2}   [전화번호]{2}".format(self.name, self.age, self.phone)
+
+ 
+
+#클래스 정의
+class CustomerBiz:
+    def __init__(self, customers ) :   #customers는 list객체
+        #멤버변수(인스턴스변수) 선언 및 초기화
+        self.customers = customers
+
+    def printAllCustomer(self) :
+        #모든 고객 정보를 출력하는 메서드
+        for idx, c in enumerate(self.customers):
+            print("{0}.{1}".format(idx+1, c))
+
+    def insertCustomer(self, customer ) :  #customer는 고객객체
+        #파라미터로 전달받은 고객객체를 멤버변수 customers리스트에 추가하는 메서드
+        self.customers.append(customer)
+        print("@ 고객 정보를 추가하였습니다.")
+        
+
+    def deleteCustomer(self, cno  ) :     
+        #리스트에 저장된 customer객체 번호를 입력받아서  멤버변수 customers리스트에서 삭제하는 메서드
+        if cno>0 and cno <=len(self.customers) :
+            del self.customers[cno-1]
+            print("@", cno , "번 고객 정보를 삭제하였습니다.")
+
+
+
+
+     
+
+class CommonUtil :
+    @staticmethod
+    def getUserInput() :
+        #사용자로부터 키보드 입력을 받아서 리턴하는 메서드
+        return input('')
+   
+    @staticmethod
+    def printHead() :
+        #도서정보 출력할때 heading만 출력하는 메서드
+        print("----------------------------고객 정보 ---------------------------------")
+
+
+    @staticmethod
+    def printTail() :
+        #모든 도서정보 출력후 밑줄 출력하는 메서드
+        print("-----------------------------------------------------------------------")
+
+    @staticmethod
+    def printMenu() :
+        #메뉴 출력하는 메서드
+        print("=== << 고객 관리 프로그램 >> ===")
+        print("1. 전체 고객 정보 조회 ")
+        print("2. 고객 정보 추가 ")
+        print("3. 고객 정보 삭제")       
+        print("9. 시스템 종료 ")        
+        print("===============================")
+
+
+
+#객체 생성하고 메서드 호출하는 실행코드 (Sample Run 참고)
+#객체 생성하고 메서드 호출하는 실행코드 (Sample Run 참고)
+customers = [
+    Customer("Lee", 28, "010-5678-1234"),
+    Customer("Park", 31, "010-4567-9876"),
+    Customer("Choi", 25, "010-1111-2222"),
+]
+
+biz = CustomerBiz(customers )
+while True :
+    CommonUtil.printMenu()
+    print("## 메뉴 입력:", end=" ")
+    menu = int( CommonUtil.getUserInput())
+    if menu == 9 :
+        print("---------------------------------")
+        print("프로그램을 종료합니다. Bye~ Bye~")
+        print("---------------------------------")
+        break
+    elif menu ==1 :
+        CommonUtil.printHead()
+        biz.printAllCustomer()
+        CommonUtil.printTail()
+    elif menu ==2 :
+        print("---------------------------------")
+        print("새로운 고객 정보를 추가합니다 ")
+        print("새로운 고객 정보를 입력하세요 ")
+        print("---------------------------------")
+        print("이름:", end="")
+        name = CommonUtil.getUserInput()
+        print("나이:", end="")
+        age = int(CommonUtil.getUserInput())
+        print("전화번호:", end="")
+        phone =  CommonUtil.getUserInput()
+        biz.insertCustomer(Customer(name, age, phone))
+        print("------------------------------") 
+    elif menu ==3 :
+        print("---------------------------------")
+        print("새로운 고객 정보를 삭제합니다 ")
+        print("삭제할 고객의 번호를 입력하세요 ")
+        print("---------------------------------")
+        print("번호:", end="")
+        num = int(CommonUtil.getUserInput())
+        biz.deleteCustomer(num)
+        print("---------------------------------")
+
+
+
+
+###################################
+#클래스 정의
+class Product :
+    def __init__(self, name, price) :
+        #멤버변수(인스턴스변수) 선언 및 초기화
+         pass
+   
+    def __str__(self) :
+        #Product클래스로부터 생성된 객체의 상태를 표현하는 문자열 리턴
+        pass
+
+
+#클래스 정의
+class ShoppingBiz :
+    def __init__(self, cart ) :     #cart는 Product객체가 key, 구입개수  정수가 value로 저장되어 있는 dict객체
+        #파라미터로 전달받은 dict객체 cart를 멤버변수 cart에 할당 초기화
+        pass
+
+    def printAllProducts(self):
+        #장바구니에 담겨진 상품 정보와 구입개수 출력하는 메서드       
+        for idx, (k, v) in enumerate(self.cart.items()):
+            print("  {0}.  {1}\t{2}개".format(idx+1 ,k, v))
+    
+    def printPricePerProduct(self):
+        #장바구니에 담겨진 상품별 구매 가격 출력하는 메서드
+        pass
+
+
+    def calculateTotalByProduct(self, product, count):
+        #상품객체와 구입개수를 파라미터로 전달받아 해당 상품의 총 구매 가격을 리턴 
+        pass
+
+    def calculateTotalPrice(self):
+        ##장바구니에 담겨진 모든  상품의 총 구매 가격 리턴하는 메서드 
+        pass
+
+
+class CommonUtil :
+    @staticmethod
+    def getUserInput() :
+        #사용자로부터 키보드 입력을 받아서 리턴하는 메서드
+        pass
+   
+     @staticmethod
+    def printHead() :
+        #정보 출력할때 heading만 출력하는 메서드
+        pass
+
+
+    @staticmethod
+    def printTail() :
+        #모든 정보 출력후 밑줄 출력하는 메서드
+        pass
+
+    @staticmethod
+    def printMenu() :
+        #메뉴 출력하는 메서드
+        pass
+
+#객체 생성하고 메서드 호출하는 실행코드 (Sample Run 참고)

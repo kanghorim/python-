@@ -1,0 +1,369 @@
+함수? 어떤 일을 수행하는 코드들의 묶음, 재사용(필요할 때마다 호출 가능)
+프로그램의 논리적 기능 분할 단위 
+
+함수 호출시 전달되는 값 : 파라미터, 실 매개인수
+함수 정의할때 선언하는 변수 : 형식 매개변수
+def 함수이름(변수, 변수, 변수,...) :
+    어떤 일을 수행하는 코드
+    return 값|변수|연산식
+
+python의 함수는 명시적인 return이 없는 경우 None이 반환됨
+python의 함수 호출시에 함수를 파라미터 전달할 수 있습니다. (함수적 프로그래밍 특성)
+
+CallByValue 함수 호출 방식 : 함수 호출시에 값을 복사해서 전달
+CallByReference 함수 호출 방식 : 함수 호출시에 주소를 전달
+
+#파이썬 인터프리터는 내장타입(int, float,..)은 값을 복사해서 함수호출시에 전달
+def f(x):
+    y=x
+    x=5
+    return y*y
+
+x = 3
+print(f(x))   #CallByValue
+print(x)
+
+#파이썬 인터프리터는 집합타입(list, set, dict)은 주소를 복사해서 함수호출시에 전달
+def spam(eggs) :
+    eggs.append(1)
+
+ham = [0]
+spam(ham)  #CallByReference
+print(ham)
+
+
+변수의 사용 범위 :
+전역 변수 : 프로그램 전체에서 사용됨
+지역 변수 : 함수 안에서만 유효, 함수 밖에서 참조할수 없음(오류 발생)  
+
+def test(t):
+    print(x)
+    t= 20
+    print("In Function :", t)
+
+x = 10
+test(x)  #CallByValue
+print("In Main:", x)
+print("In Main:", t)
+
+
+#함수 내부에서 전역변수를 사용해서 연산 처리하려면
+def test():
+    global x 
+    x=x**2  #초기화 없이 변수를 사용하고 있음
+    return x
+
+x= 10
+test()
+
+
+#재귀함수(recursive function) : 함수가 함수 내부에서 자기 자신을 호출하는 함수
+예 : factorial을 구하는 함수를 정의
+5!=5*4*3*2*1
+n!=n*(n-1)!
+        (n-1) *((n-1)-1)!
+
+def factorial(n) :
+    if n==1:
+        return 1
+    else :
+        return n*factorial(n-1)
+
+print(factorial(5))
+#5*factorial(4)
+=5*4*factorial(3)
+=5*4*3*factorial(2)
+= 5*4*3*2*factorial(1)
+= 5*4*3*2*1    
+
+
+함수 호출시에 인수 전달 :
+1. positional arugments 전달
+2. named arugments 전달
+3. default value arugments 정의
+4. 가변 인수 (variable-length arugments ) : *매개변수(마지막 인수로 선언)
+5. 키워드 가변 인수  : 키=값형태로 0 or more 전달  (마지막 인수로 선언) 
+     전달 타입이 dict , **매개변수
+
+
+
+lambda 함수 :  1회성함수 , 익명 함수
+
+#파이썬의 모든 값은 객체
+#객체 : 현실세계의 유형, 무형의 모든 것
+          속성(상태, 특성)과 행위(동작, 기능) 구성
+          소프트웨어적으로 객체는 속성을 변수로 행위는 메서드로 구성된 것
+          객체의 설계도인 클래스로부터 메모리에 생성된 인스턴스
+#클래스 : 객체를 생성하기 위한 설계도 (객체의 속성과 행위를 정의한것)
+             객체가 가져야 할 기본 정보를 담은 코드
+
+#객체지향언어의 3특성 :  상속, 캡슐화, 다형성
+#클래스로부터 객체를 생성할때 초기값을 전달하면, 메모리에 객체가 생성되면서
+객체의 속성(상태변수)들이 전달된 값으로 초기화를 수행하는 메서드 => __init__
+class Student(object) :   #class Student() : 와 동일
+
+    def __init__(self, sno, name, kor, eng, math) :    
+        self.sno = sno
+        self.kor  = kor
+        self.eng = eng  #초기값
+        self.math = math  #초기값
+        self.name = name  #초기값
+   
+    def sum(self):   #총점 반환 메서드
+        return self.kor+ self.eng + self.math
+
+    def avg(self):  #평균 반환 메서드
+        return  self.sum()/3   #self.sum() 메서드 호출
+
+lee = Student(2101001, '이한국', 70,80,90)  #객체 생성
+print("학번 :", lee.sno)
+print("이름 : ", lee.name)  #객체의 속성 참조
+print("총점:", lee.sum())
+print("평균:", lee.avg())   #메서드 호출
+print(lee)  #객체를 출력하면 __main__모듈.클래스이름 object at 객체id(논리적주소역할
+
+class TV():
+    def __init__(self, volume=0, channel=0, power=False):
+        self.power=power
+        self.channel = channel
+        self.volume = volume
+
+    def volumeUp(self):
+        self.volume +=1
+
+    def volumeDown(self):
+        self.volume -=1     
+
+    def channelChange(self, ch) :
+        if ch ==-1 :
+            self.channel -=1
+        elif  ch ==1 :
+            self.channel +=1
+        else :
+            self.channel = ch
+
+    def onoff(self) :
+        if self.power :
+            self.power = False
+        else :
+            self.power = True
+
+    def __str__(self) :   #object 부모객체로부터 상속받아서 재정의 : override
+        #return  "power is %s. volume is %s. channel is %s" % (self.power, self.volume, self.channel)
+        return  "power is {0}. volume is {1}. channel is {2}".format(self.power, self.volume, self.channel)
+
+lgTV = TV()   #TV(0, 0, True)
+print(lgTV)  #객체 출력  print(lgTV.__str__())
+lgTV.onoff()
+lgTV.volumeUp()
+lgTV.channelChange(1)
+print(lgTV)
+lgTV.volumeDown()
+lgTV.channelChange(11)
+print(lgTV)
+lgTV.onoff()
+print(lgTV)
+print(lgTV.__str__())
+
+#__init__()는 객체가 생성횔 때 호출되는 메소드로써, 객체의 초기화를 담당합니다
+#객체가 처음부터 가져야 할 데이터 속성을 __init__()에서 정의합니다
+
+
+#static 메서드
+@staticmethod 데코레이터로 선언
+self 매개변수 없는 메소드
+인스턴스(객체)를 통해서 접근이 가능하지만 클래스를 통해 호출
+정적 메소드는 self 매개변수를 전달받을 방법이 없으므로 객체/인스턴스의 변수에 접근할 수 없습니다
+정적 메소드는 객체의 데이터 속성과는 관계가 없는 코드로 구현되는 것이 일반적입니다
+클래스와 객체들이 가지는 유틸리티 기능(입력 받기, 한영 변환)
+
+class Calculator:
+    @staticmethod
+    def plus(a, b):
+        return a+b
+
+Obj = Calculator()
+print(Obj.plus(3, 5))
+print( Calculator.plus(7, 4))
+
+#클래스 메소드
+@classmethod 데코레이터
+cls 매개변수가 필요한 메소드
+인스턴스 와 클래스를 통해 호출하는 것이 가능합니다
+클래스 변수를 다루기 위한 메서드
+
+class InstanceCounter :
+    count=0    #클래스 변수
+    def __init__(self ):
+        InstanceCounter.count += 1
+
+    @classmethod
+    def print_instance_count(cls):
+         print(cls.count)
+
+
+a = InstanceCounter()   #객체 생성
+InstanceCounter.print_instance_count()  #클래스메서드를 호출
+
+b = InstanceCounter()   #객체 생성
+InstanceCounter.print_instance_count()  #클래스메서드를 호출
+
+c = InstanceCounter()
+c.print_instance_count()   #객체로 클래스 메서드를 호출
+
+
+#Private member : 클래스 안에서만 접근이 가능한 멤버
+class HashPrivate:
+    def __init__(self ):
+        self.public = "Public"   #클래스 밖에서  객체를 사용하여 access 가능
+        self.__private = "Private"   #클래스안에서만 access 가능
+    
+    def print_from_internal(self ):
+        print(self.public)
+        print(self.__private)
+
+
+obj = HasPrivate()
+obj. print_from_internal()
+print(obj.public)
+print(obj.__private) # 클래스 밖에서 access불가하므로 오류가 발생합니다.
+
+
+통장 만들기 클래스 실습 ########################################
+class Account :
+    def __init__(self, custId="",  custName="",  accountNumber="",  balance=0) :
+        self.__custId = custId
+        self.__custName = custName
+        self.__accountNumber =  accountNumber
+        self.__balance = balance
+
+    def getCustId(self):
+        return self.__custId
+
+    def getCustName(self):
+        return self.__custName
+
+    def getAccountNumber(self):
+        return self.__accountNumber
+
+    def getBalance(self):
+        return self.__balance
+
+    def setCustId(self, custId):
+        self.__custId = custId
+
+    def setCustName(self, custName):
+        self.__custName = custName
+
+    def setAccountNumber(self, accountNumber):
+        self.__accountNumber = accountNumber
+         
+    def setBalance(self, balance):
+        self.__balance = balance
+
+    def addBalance(self, balance):
+        print("{0}원을 입금합니다.".format(balance))
+        if balance<=0 :
+	print("금액 오류입니다 : {0}원".format(balance))
+        else :
+            self.__balance += balance
+        print("===================")
+        print("현재 잔액 : ", self.__balance)
+        print("===================")	
+
+
+    def substractBalance(self, balance):
+        print("{0}원을 출금합니다.".format(balance))
+        if(self.__balance < balance) :
+            print("출금 불가!! 잔고가 부족합니다.")
+        else :
+            self.__balance -= balance
+        print("===================")
+        print("현재 잔액 : ", self.__balance)
+        print("===================")
+
+
+    def __str__(self):
+        return "====================\n고객번호 : {0}\n고객명 : {1}\n계좌번호 : {2}\n잔액 : {3}\n====================".format(self.__custId, self.__custName, 
+self.__accountNumber , self.__balance)
+
+    
+    @staticmethod
+    def getUserInput() :
+        return int(input("==> Menu 선택 :" ))
+
+    
+    @staticmethod
+    def getMenuItem() :
+        print("[Menu]")
+        print("1.입금")
+        print("2.출금")
+        print("9.종료") 
+
+
+    @staticmethod
+    def getAmount() :
+        return int(input("금액 :" ))
+
+
+
+
+#객체 생성 후 setXXX()사용해서 상태값 초기화
+cust1 = Account()
+cust1.setCustId("CUST01")
+cust1.setCustName("소지섭")
+cust1.setAccountNumber("1-22-333")
+cust1.setBalance(100000)
+
+# 내부적으로 __init__() 사용해서 객체 생성  
+cust2 = Account("CUST01","소지섭", "1-22-333", 100000)
+print(cust1)
+
+while True :
+    Account.getMenuItem()
+    menu = Account.getUserInput()
+    if menu == 9 :
+        print("Bye~~")
+        break
+    elif menu == 1:
+        amount = Account.getAmount()
+        cust1.addBalance(amount)
+    elif menu == 2:
+        amount = Account.getAmount()
+        cust1.substractBalance(amount)
+
+
+
+
+############################################################
+class Product :
+    def __init__(self, productCode, productName, price, discountRate=0):
+        self.productCode = productCode
+        self.productName = productName
+        self.price = price
+        self.discountRate =  discountRate
+   
+    def changeDiscountRate(self, newRate):
+        print("{0}의 할인율이 {1}%에서 {2}%로 바뀌었습니다.".format(self.productName, self.discountRate, newRate)
+        self.discountRate =newRate        
+
+    def calculatePrice(self):
+        return self.price * ((100-self.discountRate)/100)
+
+
+coffee = Product("PRD001", "커피믹스", 12000, 10)
+cup = Product("PRD002", "종이컵", 3000)
+
+coffee.changeDiscountRate(20)
+cup.changeDiscountRate(5)
+
+print("=========={0}({1})==============".format(coffee.productName, coffee.productCode))
+print("정가 : {0} 원".format(coffee.price))
+print("할인률 : {0} %".format(coffee.discountRate))
+print("판매가 : {0} 원".format(coffee.calculatePrice()))
+
+
+print("=========={0}({1})==============".format(cup.productName, cup.productCode))
+print("정가 : {0} 원".format(cup.price))
+print("할인률 : {0} %".format(cup.discountRate))
+print("판매가 : {0} 원".format(cup.calculatePrice()))

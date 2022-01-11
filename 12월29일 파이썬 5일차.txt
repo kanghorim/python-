@@ -1,0 +1,430 @@
+클래스 : 객체를 생성하는 틀(설계도)
+           클래스선언 + 초기화메서드(__init__) + 인스턴스메서드(멤버 메서드)
+           인스턴변수는 생성되는 객체마다 고유한 속성값을 가지는 변수,
+           인스턴스변수는 __init__ 에서 선언하고 초기화 함
+           클래스변수는 클래스의 선언 아래 선언하고 초기화함 (모든 객체가 공유)
+           Private Member 변수는 클래스 내부에서만 access가능하고
+           Private Member 변수는 변수명에 __를 접두사로 시작
+           Private Member 는 클래스 외부에서는 객체로 직접 access 불가한 변수
+           
+           인스턴스메서드(self)
+           @staticmethod - 객체 생성없이 클래스이름으로 호출가능
+                                 객체의 인스턴스 변수를 사용하지 않는 기능 정의
+           @classmethod(cls) - 객체 생성없이 클래스이름으로 호출가능
+                                 클래스변수를 처리하는 메서드
+
+객체 :  속성(상태, data) + 행위(동작, 메서드)
+
+객체 생성  :  변수(객체) = 클래스(객체의 속성을 초기화해야 할 값 리스트)
+                 변수(객체).인스턴스변수 = 값
+                  변수(객체).인스턴스 메서드()
+
+
+class InstanceCounter :
+    count=0   #클래스변수 (모든 객체들이 공유하는 공유변수 역할을 함)
+    def __init__(self ):
+        InstanceCounter.count += 1 
+
+    @classmethod
+    def print_instance_count(cls):
+        print(cls.count)
+
+a = InstanceCounter()
+InstanceCounter.print_instance_count()
+
+b = InstanceCounter()
+InstanceCounter.print_instance_count()
+
+a.print_instance_count()  #printInstanceCount()
+b.print_instance_count()
+
+
+c = InstanceCounter()
+a.print_instance_count()
+b.print_instance_count()
+c.print_instance_count()
+
+
+객체지향의 상속 - 재사용
+자식클래스가 가져야 할 공통 기능을 부모에 정의
+부모클래스로부터 인스턴스 변수, 메서드를 상속을 받고,
+__init__ 초기화메서드는 상속되지 않으므로
+
+class Parent :
+    def __init__(self):
+        print("Parent.__init__()")
+        self.message = "Made in Parent"
+    
+    def dance(self):
+        print("Parent에서 정의한 dance()")        
+
+class Child(Parent):
+    def __init__(self): 
+        #Parent.__init__(self)
+        #부모 클래스의 객체 역할을 하는 프록시(Proxy)를 반환하는 내장 함수
+        super().__init__()   
+        print("Child.__init__()")
+
+
+
+child1 = Child()   #객체 생성 - 내부적으로 __init__()
+print(child1.message)
+child1.dance()
+
+
+#python은 다중 상속 지원
+
+class GrandParent:
+    def __init__(self):
+        print("GrandParent.__init__()")
+        self.msg = "Made in GrandParent"
+    
+    def play(self):
+        print("GrandParent에서 정의한 dance()")    
+
+
+class Parent :
+    def __init__(self):
+        print("Parent.__init__()")
+        self.message = "Made in Parent"
+    
+    def dance(self):
+        print("Parent에서 정의한 dance()")        
+
+
+class Child(GrandParent, Parent):  #다중 상속
+    def __init__(self):         
+        super().__init__()    #첫번째 부모클래스의 __init__() 호출됨
+        print("Child.__init__()")
+
+child1 = Child()   #객체 생성
+
+
+
+
+###########영화정보조회##############
+class Movie:
+    def __init__(self, title, director, genre, actor, rating, releaseYear=0, runTime=0) :
+        self.title = title
+        self.director= director
+        self.genre = genre
+        self.actor = actor
+        self.rating = rating
+        self.releaseYear =releaseYear
+        self.runTime = runTime
+    
+    @staticmethod
+    def printHead():
+        print("--------------------------------------------------------------------------------------------------")
+        print("\t제목\t\t\t감독\t\t장르\t\t주연\t개봉년도  런타임\t 등급")
+        print("--------------------------------------------------------------------------------------------------")
+        
+    def __str__(self):
+        if self.releaseYear==0 and self.runTime ==0 :
+            return "{0:<15}   {1:<7}   {2:<7}   {3:<7}   {4:<5}년 {5:<4}분  {6:<7}  ".format(self.title , self.director, self.genre,  self.actor, "N/A" ,  "N/A" , self.rating )
+        elif self.rating =="" :
+            return "{0:<15}   {1:<7}   {2:<7}   {3:<7}   {4:<5}년 {5:<4}분  {6:<7}  ".format(self.title , self.director, self.genre,  self.actor, self.releaseYear ,  self.runTime , "N/A" )
+        else :
+            return "{0:<15}   {1:<7}   {2:<7}   {3:<7}   {4:<5}년 {5:<4}분  {6:<7}  ".format(self.title , self.director, self.genre,  self.actor, self.releaseYear ,  self.runTime , self.rating )
+
+
+
+
+movies = [ Movie("반지의 제왕 - 반지 원정대", "피터 잭슨", "판타지, 모험", "일라이저 우드", "12세관람가", 2001, 178) ,
+          Movie("트랜스포머:패자의 역습", "마이클 베이", "SF, 액션", "샤이아 라보프",  "", 2009, 149),
+          Movie("러브 액츄얼리", "리처드 커티스", "멜로, 드라마", "앨런 릭맨", "15세관람가", 2003, 134),
+          Movie("쿵푸 팬더", "마크 오스본", "애니메이션", "잭 블랙", "전체관람가")
+
+print("<<전체 영화 정보 조회>>")
+Movie.printHead()
+for m in movies :
+    print(m)
+print("--------------------------------------------------------------------------------------------------\n\n")
+print("<<2005년 이전 개봉작 조회>>")
+Movie.printHead()
+for m in movies :
+    if m.releaseYear < 2005 and   m.releaseYear != 0 :
+        print(m)    
+print("--------------------------------------------------------------------------------------------------\n\n")
+print("<<애니메이션 조회>>")  
+Movie.printHead()
+for m in movies :
+    if m.genre =="애니메이션" :
+        print(m)  
+print("--------------------------------------------------------------------------------------------------\n\n")
+print("<<러닝타임 140분 이상 영화 조회>>")  
+Movie.printHead()
+for m in movies :
+    if m.runTime >= 140 :
+        print(m)          
+
+
+############################################################
+모듈(module) : 변수, 함수, 클래스를 재사용할 목적으로 python 소스 파일내에그룹핑한 것
+import문으로 로딩해서 사용한다
+ex) keyword모듈은 keyword.py로 존재함
+
+패키지(package) : (서로 관련성이 있는) 모듈을 디렉토리 구조로 그룹핑해놓은것 
+ex) numpy라이브러리(패키지) numpy폴더내에 여러 모듈들이 존재함
+
+내장모듈(표준라이브러리)는 python설치 파일과 함께 제공되는 모듈
+ex) math모듈, random모듈, datetime모듈
+
+모듈 사용을 위한 선언 1]
+import random
+
+nums = random.randint(1, 100)
+
+모듈 사용을 위한 선언 2]
+from random import randint   #from random import *
+
+nums = randint(1, 100)
+
+
+[random모듈]
+random.seed([정수]) : 임의의 숫자 생성을 위한 초기화 작업을 위한 값 설정
+random.random() : 0<= float <1 사이의 임의의 float 값을 반환
+random.randint(start, end) : start<= int <=end 사이의 임의의 int 값을 반환
+random.randrange(start, end, [step]) 
+random.gauss(m, sb) : 가우스 분포를 따르는 임의의 수 반환
+random.choice(sequence객체) :  sequence자료형인 리스트내부의 data로부터 임의의 data를 선택해서 반환
+random.shuffle(sequence객체 [, random]) 시퀀스 객체의 데이터를 섞음
+
+from random import *
+
+nums = randint(1, 100)
+print(nums)
+
+nums = random()
+print(nums)
+
+nums = uniform(1.0, 36.5) #균등분포를 따른 난수 생성
+print(nums)
+
+nums = randrange(1, 101, 2)
+print(nums)
+
+numlist = [i for i in range(1, 10)]
+print(numlist)
+shuffle(numlist)
+print(numlist) 
+
+fruites = ('사과', '바나나', '귤', '포도', '배', '딸기')
+print(choice(fruites))
+print(sample(fruites, 2))
+
+
+[datetime 내장 모듈]
+date 클래스는 날짜를 표현하는데 사용됨
+from datetime import date
+d1 =date(2021, 12, 29)   #날짜 객체 생성
+print(d1)
+
+d2 = date.today()   #오늘날짜 반환
+print(d2)
+
+#국제표준 iso-     DD-MON-YY, YY/MM/DD
+print(d2.isoformat())  #YYYY-MM-DD
+
+#날짜형식의 문자열을 date객체로 변환 : fromisoformat()
+print(type('2022-01-03'))
+d3 = date.fromisoformat('2022-01-03')
+print(d3, type(d3))
+
+#date객체가 보관하고 있는 년, 월, 일 데이터를 year, month, day속성으로 access
+print(d3.year)
+print(d3.month)
+print(d3.day)
+
+
+today = date.today()
+print(today.weekday())
+
+from datetime import date
+print(date(2021, 12, 29).isocalendar())
+
+
+#문자열 형식의 날짜와 시간을 datetime객체로 변환 : strptime() 
+#datetime객체를 문자열로 변환 : strftime()
+from datetime import datetime
+d5 = datetime.strptime("2021-12-01 12:05", '%Y-%m-%d %H:%M')
+print(d5, type(d5))
+
+
+#날짜와 시간 차이 계산하기 - timedelta객체 사용
+from datetime import timedelta
+today = date.today()
+result = today - timedelta(days=20)
+print(result, type(result))
+result = today - timedelta(hours=2)
+print(result, type(result))
+
+from datetime import datetime
+result2 = datetime(2021, 11,23) - datetime(2021, 7,8)
+print(result2, type(result2))
+
+
+%y, %Y 년도
+%b, %B 축약월, fullname 월
+%m 숫자표현 월
+%d 일(1~31)
+%H(00~23) %I(01~12) 시간
+%M 분(00~59)
+%S 초 (00~61)
+%p AM/PM
+%a, %A  축약된 요일 이름, full요일이름
+%w    요일을 숫자로 표시
+%j  1월1일부터 누적된 날짜 (001~366)
+
+
+[time 내장 모듈]
+time.time()는 1970년1월 1일 자정 이후로부터 누적된 초를 float단위로 반환
+time.sleep(seconds) 는 동작 중인 프로세스를 주어진 초만큼 정지
+time.gmtime([seconds])는 초를 입력받아서 UTC기준의 struct_time 시퀀스 객체로 반환
+time.localtime([seconds]) 초를 입력받아서 지방표준시 기준의 struct_time 시퀀스 객체로 반환
+time.asctime(struct_time 시퀀스 객체)는 '축약요일 축약월 일 시:분:초  년도' 형태로 반환
+time.mktime(struct_time 시퀀스 객체)는 970년1월 1일 자정 이후로부터 누적된 초를 반환
+
+import time
+t1 =time.time()
+print(t1, type(t1))
+t2 = time.gmtime()
+print(t2, type(t2))
+t3 = time.localtime()
+print(t3, type(t2))
+t4 = time.gmtime(1234567890)
+print(t4, type(t4))
+print(t4.tm_mon)
+print(t4.tm_hour)
+print(time.asctime(t4))
+print(time.mktime(t4))
+
+
+
+
+
+
+
+#여행사###################
+class Travel :                    #클래스 정의
+    INDIVIDUAL = 0
+    PACKAGE = 1
+def  __init__(self, travelCode, cityName, flight, travelType, maxPeople, reserved=0) :
+    #인스턴스 변수  선언과  초기화
+    self.travelCode = travelCode    
+    self.cityName  = cityName
+    self.flight = flight
+    self.travelType = travelType
+    self.maxPeople = maxPeople
+    self.reserved=0 
+
+
+def __str__(self) :    
+     #Travel클래스로부터 생성된 객체들을 상태를 표현하는 문자열 반환
+     if self.travelType == Travel.INDIVIDUAL :
+            return "{0:<6}  {1:<4}  {2:<5}  {3:<6}   {4:>2}명     {5:>2}명".format(self.travelCode,self.cityName, self.flight,"개별자유여행", self.maxPeople, self.reserved )
+     else :
+            return "{0:<6}  {1:<4}  {2:<5}  {3:<6}   {4:>2}명     {5:>2}명".format(self.travelCode,self.cityName, self.flight,"패키지여행", self.maxPeople, self.reserved )
+
+
+
+
+class TravelBiz :     #클래스 선언 (비즈니스 로직 처리)
+    def __init__(self, travels):  #travels는 리스트 객체
+        self.travels = travels   
+    
+    def printAllTravels(self) :  #모든 여행 정보 출력 메서드
+        for t in  self.travels :
+            print(t)
+    
+    def printIndividualTravels(self) : #개인 여행 정보 출력 메서드
+        for t in  self.travels :
+            if t.travelType == Travel.INDIVIDUAL :
+                print(t)
+    
+    def printPackageTravels(self) : #패키지 여행 정보 출력 메서드
+        for t in  self.travels :
+            if t.travelType == Travel.PACKAGE :
+                print(t)
+    
+             
+       
+    def reserveTravels(self, travelCode, reserveCount) : #여행 예약 메서드
+         #여행 예약하고 예약된 여행객체 반환
+        reservedTravel = None
+        for t in  self.travels :
+            if t.travelCode == travelCode :
+                if (t.maxPeople - t.reserved) > reserveCount :
+                    t.reserved +=reserveCount
+                    reservedTravel = t
+                    print("예약이 완료 되었습니다.")
+                else :
+                    print("예약 가능 인원이 초과되었습니다.(예약 가능 인원: {0}명 )".format((t.maxPeople - t.reserved)))
+        return reservedTravel
+
+  
+     @staticmethod
+    def printTravelListTitle() :   #여행정보 목록 heading출력 메서드
+        print("------------------------------------------------------------------------ ")
+        print(" 여행코드\t도시명\t항공편\t 여행유형   최대예약가능인원  예약") 
+        print("------------------------------------------------------------------------")
+    
+    @staticmethod
+    def printMenu():    #메뉴 출력 메서드
+        print("======== < 메뉴 > ========")
+        print("1. 전체 여행 상품 조회")   
+        print("2. 개별자유여행 상품 조회")
+        print("3. 패키지여행 상품 조회")
+        print("4. 여행 상품 예약")
+        print("9. 종료")
+        print("=========================")
+
+    
+    @staticmethod
+    def getUserInput():     #사용자로부터 입력받아 리턴하는 메서드
+        #사용자로부터 메뉴번호, 여행사 코드, 예약인원등 입력 받아 리턴 
+        return input("")
+
+
+
+
+#리스트 내부에 Travel클래스로부터 객체 생성해서 저장
+travels = [
+    Travel("TRV001", "뭔헨", "독일항공", Travel.INDIVIDUAL, 10),
+    Travel("TRV002", "프라하", "에어프랑스", Travel.INDIVIDUAL, 7),
+    Travel("TRV003", "LA", "델타항공", Travel.PACKAGE, 12),
+    Travel("TRV004", "후쿠오카", "대한항공", Travel.INDIVIDUAL, 15),
+    Travel("TRV005", "상해", "남방항공", Travel.PACKAGE, 10),
+]
+biz = TravelBiz(travels)    #TravelBiz클래스로부터 객체 생성
+print("Welcome~안녕하세요~ OO 여행사입니다.")
+while True :
+    TravelBiz.printMenu()           #메서드 호출
+    print("## 메뉴 입력:", end=" ")
+    menu = int( biz.getUserInput())
+    if menu == 9 :
+        print("프로그램을 종료합니다. Bye~ Bye~")
+        break
+    elif menu ==1 :
+        TravelBiz.printTravelListTitle()
+        biz.printAllTravels()
+        print("------------------------------------------------------------------------")
+    elif menu ==2 :
+        TravelBiz.printTravelListTitle()
+        biz.printIndividualTravels()
+        print("------------------------------------------------------------------------")
+    elif menu ==3 :
+        TravelBiz.printTravelListTitle()
+        biz.printPackageTravels()
+        print("------------------------------------------------------------------------")
+    elif menu ==4 :
+        print("여행 상품을 예약합니다.")
+        print("여행 코드 입력:", end=" ")
+        tCode = biz.getUserInput()
+        print("여행 인원 입력:", end=" ")
+        tCount = int(biz.getUserInput())
+        reserved = biz.reserveTravels(tCode, tCount)
+        if reserved :
+            TravelBiz.printTravelListTitle()
+            print(reserved)
+            print("------------------------------------------------------------------------")
